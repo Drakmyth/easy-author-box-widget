@@ -1,4 +1,4 @@
-# Unreal Engine Marketplace Additional Asset Filters User Script
+# Easy Author Box Widget
 [![License](https://img.shields.io/github/license/Drakmyth/wp-easy-author-box-widget)](https://github.com/Drakmyth/wp-easy-author-box-widget/blob/master/LICENSE.md)
 
 A WordPress plugin to add a configurable author box widget with social icons
