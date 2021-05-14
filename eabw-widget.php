@@ -55,11 +55,14 @@ class EABW_Widget extends WP_Widget {
         $background_color = $instance['background_color'];
         $body_style = 'background: '.$background_color.'; ';
 
+        $name_color = $instance['name_color'];
+        $name_style = 'color: '.$name_color.';';
+
         echo $args['before_widget'];
         ?>
             <?php echo($args['before_title'].$title.$args['after_title']); ?>
             <div class="widget-body" style="<?php echo($body_style); ?>">
-                <span><?php echo($display_name); ?></span>
+                <span style="<?php echo($name_style); ?>"><?php echo($display_name); ?></span>
                 <?php echo(get_avatar($email, $avatar_size, '', '', array('class'=>$avatar_class))); ?>
                 <div class="widget-social">
                     <?php foreach($social_links as $link) { ?>
@@ -106,6 +109,10 @@ class EABW_Widget extends WP_Widget {
         $background_color_id = $this->get_field_id('background_color');
         $background_color_name = $this->get_field_name('background_color');
 
+        $name_color = esc_attr(! empty($instance['name_color']) ? $instance['name_color'] : '#000000');
+        $name_color_id = $this->get_field_id('name_color');
+        $name_color_name = $this->get_field_name('name_color');
+
         // $border_width = esc_attr(! empty($instance['border_width']) ? $instance['border_width'] : '');
         // $border_width_id = $this->get_field_id('border_width');
         // $border_width_name = $this->get_field_name('border_width');
@@ -147,6 +154,10 @@ class EABW_Widget extends WP_Widget {
             <label for="<?php echo($background_color_id); ?>">Background Color:</label>
             <input type="color" id="<?php echo($background_color_id); ?>" name="<?php echo($background_color_name); ?>" value="<?php echo($background_color); ?>" />
         </p>
+        <p>
+            <label for="<?php echo($name_color_id); ?>">Name Color:</label>
+            <input type="color" id="<?php echo($name_color_id); ?>" name="<?php echo($name_color_name); ?>" value="<?php echo($name_color); ?>" />
+        </p>
         
         <script>
             var sliderIds = ['<?php echo($avatar_size_id); ?>'];
@@ -182,6 +193,7 @@ class EABW_Widget extends WP_Widget {
         $instance['avatar_shadow'] = isset($new_instance['avatar_shadow']);
         $instance['social_shadow'] = isset($new_instance['social_shadow']);
         $instance['background_color'] = strip_tags($new_instance['background_color']);
+        $instance['name_color'] = strip_tags($new_instance['name_color']);
         return $instance;
     }
 }
