@@ -6,7 +6,7 @@ function eabw_social_links_form(WP_User $user) {
     <table class="form-table" role="presentation">
         <tbody>
             <tr>
-                <th><label for="eabw-user-social">Social Links</label></th>
+                <th><span>Social Links</span></th>
                 <td>
                     <table class="form-table eabw-social-table" id="eabw-profile-social-links">
                         <tbody>
@@ -63,6 +63,13 @@ function eabw_social_links_form(WP_User $user) {
                     <button type="button" onclick="addRow('eabw-profile-social-links', 'eabw-profile-social-options')">Add Link</button>
                 </td>
             </tr>
+            <tr>
+                <th><label for="eabw-website-override">Website Override</label></th>
+                <td>
+                    <?php $web_override = get_user_meta($user->ID, "eabw_website_override", true); ?>
+                    <input type="url" name="eabw-website-override" id="eabw-website-override" class="regular-text code" value="<?php echo($web_override); ?>">
+                </td>
+            </tr>
         </tbody>
     </table>
     <?php
@@ -82,8 +89,10 @@ function eabw_social_links_save($userId) {
     $links = $_POST['eabw-txtLink'];
 
     $data = array_map(null, $icons, $customs, $services, $links);
+    update_user_meta($userId, 'eabw_social_links', $data);
 
-    update_user_meta( $userId, 'eabw_social_links', $data);
+    $web_override = $_POST['eabw-website-override'];
+    update_user_meta($userId, 'eabw_website_override', $web_override);
 }
 add_action('personal_options_update', 'eabw_social_links_save');
 add_action('edit_user_profile_update', 'eabw_social_links_save');
