@@ -55,9 +55,11 @@ class EABW_Widget extends WP_Widget {
         $background_color = $instance['background_color'];
         $border_color = $instance['border_color'];
         $border_width = $instance['border_width'];
+        $border_radius = $instance['border_radius'];
         $body_style = 'background: '.$background_color.'; ';
         $body_style .= 'border-color: '.$border_color.'; ';
-        $body_style .= 'border-width: '.$border_width.'px;';
+        $body_style .= 'border-width: '.$border_width.'px; ';
+        $body_style .= 'border-radius: '.$border_radius.'px;';
 
         $name_color = $instance['name_color'];
         $name_style = 'color: '.$name_color.';';
@@ -96,7 +98,7 @@ class EABW_Widget extends WP_Widget {
         $title_id = $this->get_field_id('title');
         $title_name = $this->get_field_name('title');
 
-        $avatar_size = esc_attr(! empty($instance['avatar_size']) ? $instance['avatar_size'] : 150);
+        $avatar_size = esc_attr(is_numeric($instance['avatar_size']) ? $instance['avatar_size'] : 150);
         $avatar_size_id = $this->get_field_id('avatar_size');
         $avatar_size_name = $this->get_field_name('avatar_size');
 
@@ -128,13 +130,13 @@ class EABW_Widget extends WP_Widget {
         $border_color_id = $this->get_field_id('border_color');
         $border_color_name = $this->get_field_name('border_color');
 
-        $border_width = esc_attr(! empty($instance['border_width']) ? $instance['border_width'] : 3);
+        $border_width = esc_attr(is_numeric($instance['border_width']) ? $instance['border_width'] : 3);
         $border_width_id = $this->get_field_id('border_width');
         $border_width_name = $this->get_field_name('border_width');
 
-        // $border_radius = esc_attr(! empty($instance['border_radius']) ? $instance['border_radius'] : '');
-        // $border_radius_id = $this->get_field_id('border_radius');
-        // $border_radius_name = $this->get_field_name('border_radius');
+        $border_radius = esc_attr(is_numeric($instance['border_radius']) ? $instance['border_radius'] : 0);
+        $border_radius_id = $this->get_field_id('border_radius');
+        $border_radius_name = $this->get_field_name('border_radius');
         ?>
 
         <p>
@@ -182,9 +184,14 @@ class EABW_Widget extends WP_Widget {
             <input type="range" min="0" max="30" class="slider widefat" id="<?php echo($border_width_id); ?>" name="<?php echo($border_width_name); ?>" value="<?php echo($border_width); ?>" />
             <span id="<?php echo($border_width_id.'_display'); ?>"></span>
         </p>
+        <p>
+            <label for="<?php echo($border_radius_id); ?>">Border Radius:</label>
+            <input type="range" min="0" max="100" class="slider widefat" id="<?php echo($border_radius_id); ?>" name="<?php echo($border_radius_name); ?>" value="<?php echo($border_radius); ?>" />
+            <span id="<?php echo($border_radius_id.'_display'); ?>"></span>
+        </p>
 
         <?php
-            $sliderIds = implode("', '", array($avatar_size_id, $border_width_id));
+            $sliderIds = implode("', '", array($avatar_size_id, $border_width_id, $border_radius_id));
         ?>
         
         <script>
@@ -225,6 +232,7 @@ class EABW_Widget extends WP_Widget {
         $instance['description_color'] = strip_tags($new_instance['description_color']);
         $instance['border_color'] = strip_tags($new_instance['border_color']);
         $instance['border_width'] = $new_instance['border_width'];
+        $instance['border_radius'] = $new_instance['border_radius'];
         return $instance;
     }
 }
