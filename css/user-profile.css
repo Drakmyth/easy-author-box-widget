@@ -50,7 +50,6 @@
 }
 
 .eabw-widget .widget-body img {
-    border-radius: 50%;
     margin: 10px 0;
 }
 
@@ -81,4 +80,16 @@
 
 .eabw-widget .widget-social-link:active {
     text-decoration: none;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.shadow-avatar {
+    filter: drop-shadow(5px 5px 5px #7f7f7f);
+}
+
+.shadow-social {
+    filter: drop-shadow(1px 1px 1px #7f7f7f);
 }

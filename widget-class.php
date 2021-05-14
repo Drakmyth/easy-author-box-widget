@@ -35,15 +35,17 @@ class EABW_Widget extends WP_Widget {
         $email = get_the_author_meta('user_email');
         $description = get_the_author_meta('description');
         $social_links = get_the_author_meta('eabw_social_links');
+        $social_class = 'widget-social-link shadow-social';
+        $avatar_class = 'shadow-avatar round';
         ?>
             <div class="widget eabw-widget">
                 <h3 class="widget-title">Author</h3>
                 <div class="widget-body">
                     <span><?php echo($display_name); ?></span>
-                    <?php echo(get_avatar($email, 150)); ?>
+                    <?php echo(get_avatar($email, 150, '', '', array('class'=>$avatar_class))); ?>
                     <div class="widget-social">
                         <?php foreach($social_links as $link) { ?>
-                            <a href="<?php echo($link[3]); ?>" class="widget-social-link" title="<?php echo($link[2]); ?>">
+                            <a href="<?php echo($link[3]); ?>" class="<?php echo($social_class); ?>" title="<?php echo($link[2]); ?>">
                             <i class="fab fa-<?php echo($link[0]); ?> color"></i>
                         </a>
                         <?php } ?>
