@@ -40,8 +40,8 @@ function eabw_social_links_form(WP_User $user) {
                                         <td class="eabw-social-link">
                                             <input type="text" name="eabw-txtLink[]" value="<?php echo($linkdata[3]); ?>">
                                         </td>
-                                        <td class="eabw-social-delete">
-                                            <div onclick="deleteRow(this)"><i class="fa fa-trash-alt color"></i></div>
+                                        <td class="eabw-social-delete nodrag">
+                                            <i class="fa fa-trash-alt color" onclick="deleteRow(this)"></i>
                                         </td>
                                     </tr>
                             <?php } ?>

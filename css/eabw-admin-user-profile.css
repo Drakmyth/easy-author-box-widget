@@ -1,5 +1,6 @@
 .eabw-social-table {
     margin-bottom: 20px;
+    table-layout: auto;
 }
 
 .eabw-social-table th,
@@ -8,27 +9,17 @@
     width: auto;
 }
 
-.eabw-social-table .eabw-social-icon {
-    min-width: 35px;
-}
-
 .eabw-social-table .eabw-social-icon i {
     font-size: 40px;
 }
 
-.eabw-social-table .eabw-social-service {
-    min-width: 59px;
-}
-
-.eabw-social-table .eabw-social-link {
-    min-width: 170px;
-}
-
-.eabw-social-table .eabw-social-delete {
+.eabw-social-table .eabw-social-link,
+.eabw-social-table .eabw-social-link input {
     width: 100%;
 }
 
 .eabw-social-table .eabw-social-delete i {
     font-size: 30px;
     color: #ff0000;
+    cursor: pointer;
 }

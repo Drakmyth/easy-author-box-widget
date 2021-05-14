@@ -25,10 +25,10 @@ function addRow(tableId, selectId) {
     populateServiceCell(cell2, preset);
 
     var cell3 = row.insertCell(2);
-    populateLinkCell(cell3, preset);
+    populateLinkCell(cell3);
 
     var cell4 = row.insertCell(3);
-    populateDeleteCell(cell4, tableId, row);
+    populateDeleteCell(cell4);
 
     jQuery('#' + tableId).tableDnDUpdate();
 }
@@ -82,7 +82,7 @@ function populateServiceCell(cell, preset) {
     }
 }
 
-function populateLinkCell(cell, preset) {
+function populateLinkCell(cell) {
     cell.className = 'eabw-social-link'
     var input = document.createElement('input');
     input.type = 'text';
@@ -90,10 +90,10 @@ function populateLinkCell(cell, preset) {
     cell.appendChild(input);
 }
 
-function populateDeleteCell(cell, tableId, row) {
-    cell.className = 'eabw-social-delete';
+function populateDeleteCell(cell) {
+    cell.className = 'eabw-social-delete nodrag';
     var tag = document.createElement('i');
     tag.className = 'fa fa-trash-alt';
-    tag.onclick = () => deleteRow(tableId, row);
+    tag.addEventListener('click', () => deleteRow(tag));
     cell.appendChild(tag);
 }
