@@ -2,7 +2,8 @@
     margin-bottom: 20px;
 }
 
-.eabw-social-table th, .eabw-social-table td {
+.eabw-social-table th,
+.eabw-social-table td {
     padding: 0 30px 0 0;
     width: auto;
 }
@@ -30,4 +31,54 @@
 .eabw-social-table .eabw-social-delete i {
     font-size: 30px;
     color: #ff0000;
+}
+
+.eabw-widget .widget-title {
+    margin-bottom: 15px;
+}
+
+.eabw-widget .widget-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+    padding: 20px;
+    border-color: black;
+    border-width: 3px;
+    border-style: solid;
+    margin: 0;
+}
+
+.eabw-widget .widget-body img {
+    border-radius: 50%;
+    margin: 10px 0;
+}
+
+.eabw-widget .widget-body span {
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+.eabw-widget .widget-social {
+    margin: 5px 0;
+}
+
+.eabw-widget .widget-social-link i {
+    font-size: 40px;
+}
+
+.eabw-widget .widget-social-link:link {
+    text-decoration: none;
+}
+
+.eabw-widget .widget-social-link:visited {
+    text-decoration: none;
+}
+
+.eabw-widget .widget-social-link:hover {
+    text-decoration: none;
+}
+
+.eabw-widget .widget-social-link:active {
+    text-decoration: none;
 }

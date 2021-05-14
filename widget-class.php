@@ -31,11 +31,25 @@ class EABW_Widget extends WP_Widget {
      * @param array $instance Saved values from database
      */
     public function widget($args, $instance) {
-        $author = get_the_author();
+        $display_name = get_the_author_meta('display_name');
+        $email = get_the_author_meta('user_email');
+        $description = get_the_author_meta('description');
+        $social_links = get_the_author_meta('eabw_social_links');
         ?>
-            <div class="widget widget_eabw">
+            <div class="widget eabw-widget">
                 <h3 class="widget-title">Author</h3>
-                <span><?php echo($author); ?></span>
+                <div class="widget-body">
+                    <span><?php echo($display_name); ?></span>
+                    <?php echo(get_avatar($email, 150)); ?>
+                    <div class="widget-social">
+                        <?php foreach($social_links as $link) { ?>
+                            <a href="<?php echo($link[3]); ?>" class="widget-social-link" title="<?php echo($link[2]); ?>">
+                            <i class="fab fa-<?php echo($link[0]); ?> color"></i>
+                        </a>
+                        <?php } ?>
+                    </div>
+                    <p><?php echo($description); ?></p>
+                </div>
             </div>
         <?php
     }
