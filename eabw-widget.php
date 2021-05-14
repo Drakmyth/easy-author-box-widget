@@ -99,6 +99,14 @@ class EABW_Widget extends WP_Widget {
         $title_id = $this->get_field_id('title');
         $title_name = $this->get_field_name('title');
 
+        $name_link = esc_attr(! empty($instance['name_link']) ? $instance['name_link'] : 'posts');
+        $name_link_id = $this->get_field_id('name_link');
+        $name_link_name = $this->get_field_name('name_link');
+
+        $avatar_link = esc_attr(! empty($instance['avatar_link']) ? $instance['avatar_link'] : 'none');
+        $avatar_link_id = $this->get_field_id('avatar_link');
+        $avatar_link_name = $this->get_field_name('avatar_link');
+
         $avatar_size = esc_attr(is_numeric($instance['avatar_size']) ? $instance['avatar_size'] : 150);
         $avatar_size_id = $this->get_field_id('avatar_size');
         $avatar_size_name = $this->get_field_name('avatar_size');
@@ -143,6 +151,24 @@ class EABW_Widget extends WP_Widget {
         <p>
             <label for="<?php echo($title_id); ?>">Title:</label>
             <input type="text" class="widefat" id="<?php echo($title_id); ?>" name="<?php echo($title_name); ?>" value="<?php echo($title); ?>" />
+        </p>
+        <p>
+            <label for="<?php echo($name_link_id); ?>">Name Link:</label>
+            <select id="<?php echo($name_link_id); ?>" name="<?php echo($name_link_name); ?>">
+                <option value="none" <?php if($name_link == 'none') { echo('selected'); } ?>>None</option>
+                <option value="posts" <?php if($name_link == 'posts') { echo('selected'); } ?>>Posts</option>
+                <option value="website" <?php if($name_link == 'website') { echo('selected'); } ?>>Website</option>
+                <option value="override" <?php if($name_link == 'override') { echo('selected'); } ?>>Override</option>
+            </select>
+        </p>
+        <p>
+            <label for="<?php echo($avatar_link_id); ?>">Avatar Link:</label>
+            <select id="<?php echo($avatar_link_id); ?>" name="<?php echo($avatar_link_name); ?>">
+                <option value="none" <?php if($avatar_link == 'none') { echo('selected'); } ?>>None</option>
+                <option value="posts" <?php if($avatar_link == 'posts') { echo('selected'); } ?>>Posts</option>
+                <option value="website" <?php if($avatar_link == 'website') { echo('selected'); } ?>>Website</option>
+                <option value="override" <?php if($avatar_link == 'override') { echo('selected'); } ?>>Override</option>
+            </select>
         </p>
         <p>
             <label for="<?php echo($avatar_size_id); ?>">Avatar Size:</label>
@@ -224,6 +250,8 @@ class EABW_Widget extends WP_Widget {
     public function update($new_instance, $old_instance) {
         $instance = $old_instance;
         $instance['title'] = sanitize_text_field($new_instance['title']);
+        $instance['name_link'] = sanitize_key($new_instance['name_link']);
+        $instance['avatar_link'] = sanitize_key($new_instance['avatar_link']);
         $instance['avatar_size'] = is_numeric($new_instance['avatar_size']) ? $new_instance['avatar_size'] : 150;
         $instance['avatar_shape'] = sanitize_key($new_instance['avatar_shape']);
         $instance['avatar_shadow'] = isset($new_instance['avatar_shadow']);
