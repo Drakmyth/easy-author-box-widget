@@ -32,6 +32,7 @@ class EABW_Widget extends WP_Widget {
      */
     public function widget($args, $instance) {
         $title = apply_filters('widget_title', $instance['title']);
+        $title = empty($title) ? 'Author' : $title;
         $display_name = get_the_author_meta('display_name');
         $email = get_the_author_meta('user_email');
         $avatar_size = $instance['avatar_size'];
@@ -94,7 +95,7 @@ class EABW_Widget extends WP_Widget {
      * @param array $instance Previously saved values from database
      */
     public function form($instance) {
-        $title = esc_attr(! empty($instance['title']) ? $instance['title'] : 'Author');
+        $title = esc_attr(! empty($instance['title']) ? $instance['title'] : '');
         $title_id = $this->get_field_id('title');
         $title_name = $this->get_field_name('title');
 
