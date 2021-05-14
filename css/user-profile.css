@@ -1,0 +1,33 @@
+.eabw-social-table {
+    margin-bottom: 20px;
+}
+
+.eabw-social-table th, .eabw-social-table td {
+    padding: 0 30px 0 0;
+    width: auto;
+}
+
+.eabw-social-table .eabw-social-icon {
+    min-width: 35px;
+}
+
+.eabw-social-table .eabw-social-icon i {
+    font-size: 40px;
+}
+
+.eabw-social-table .eabw-social-service {
+    min-width: 59px;
+}
+
+.eabw-social-table .eabw-social-link {
+    min-width: 170px;
+}
+
+.eabw-social-table .eabw-social-delete {
+    width: 100%;
+}
+
+.eabw-social-table .eabw-social-delete i {
+    font-size: 30px;
+    color: #ff0000;
+}

@@ -22,6 +22,14 @@
  */
 
 /**
+ * Prevent plugin from being accessed directly
+ */
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+require_once( 'widget-class.php' );
+require_once( 'user-profile.php' );
+
+/**
  * Activation hook
  */
 function eabw_on_activation() {
@@ -44,4 +52,19 @@ function eabw_on_uninstall() {
 
 }
 register_uninstall_hook( __FILE__, 'eabw_on_uninstall');
+
+function eabw_on_widgets_init() {
+    register_widget( 'EABW_Widget' );
+}
+add_action( 'widgets_init', 'eabw_on_widgets_init' );
+
+function eabw_on_enqueue_scripts() {
+    wp_enqueue_script( 'eabw-font-awesome-script', 'https://kit.fontawesome.com/72f61814cc.js');
+    wp_enqueue_style( 'eabw-font-awesome-brand-colors', plugins_url('/css/brand-colors.min.css', __FILE__) );
+
+    wp_enqueue_script( 'eabw-admin-user-profile-script', plugins_url('/js/user-profile.js', __FILE__) );
+    wp_enqueue_style( 'eabw-admin-user-profile-style', plugins_url('/css/user-profile.css', __FILE__) );
+}
+add_action( 'wp_enqueue_scripts', 'eabw_on_enqueue_scripts' );
+add_action( 'admin_enqueue_scripts', 'eabw_on_enqueue_scripts' );
 ?>
