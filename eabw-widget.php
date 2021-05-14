@@ -54,8 +54,10 @@ class EABW_Widget extends WP_Widget {
 
         $background_color = $instance['background_color'];
         $border_color = $instance['border_color'];
+        $border_width = $instance['border_width'];
         $body_style = 'background: '.$background_color.'; ';
-        $body_style .= 'border-color: '.$border_color.';';
+        $body_style .= 'border-color: '.$border_color.'; ';
+        $body_style .= 'border-width: '.$border_width.'px;';
 
         $name_color = $instance['name_color'];
         $name_style = 'color: '.$name_color.';';
@@ -126,9 +128,9 @@ class EABW_Widget extends WP_Widget {
         $border_color_id = $this->get_field_id('border_color');
         $border_color_name = $this->get_field_name('border_color');
 
-        // $border_width = esc_attr(! empty($instance['border_width']) ? $instance['border_width'] : '');
-        // $border_width_id = $this->get_field_id('border_width');
-        // $border_width_name = $this->get_field_name('border_width');
+        $border_width = esc_attr(! empty($instance['border_width']) ? $instance['border_width'] : 3);
+        $border_width_id = $this->get_field_id('border_width');
+        $border_width_name = $this->get_field_name('border_width');
 
         // $border_radius = esc_attr(! empty($instance['border_radius']) ? $instance['border_radius'] : '');
         // $border_radius_id = $this->get_field_id('border_radius');
@@ -175,9 +177,18 @@ class EABW_Widget extends WP_Widget {
             <label for="<?php echo($border_color_id); ?>">Border Color:</label>
             <input type="color" id="<?php echo($border_color_id); ?>" name="<?php echo($border_color_name); ?>" value="<?php echo($border_color); ?>" />
         </p>
+        <p>
+            <label for="<?php echo($border_width_id); ?>">Border Width:</label>
+            <input type="range" min="0" max="30" class="slider widefat" id="<?php echo($border_width_id); ?>" name="<?php echo($border_width_name); ?>" value="<?php echo($border_width); ?>" />
+            <span id="<?php echo($border_width_id.'_display'); ?>"></span>
+        </p>
+
+        <?php
+            $sliderIds = implode("', '", array($avatar_size_id, $border_width_id));
+        ?>
         
         <script>
-            var sliderIds = ['<?php echo($avatar_size_id); ?>'];
+            var sliderIds = ['<?php echo($sliderIds); ?>'];
             sliderIds.forEach(sliderId => {
                 var slider = document.getElementById(sliderId);
                 var display = document.getElementById(sliderId + "_display");
@@ -213,6 +224,7 @@ class EABW_Widget extends WP_Widget {
         $instance['name_color'] = strip_tags($new_instance['name_color']);
         $instance['description_color'] = strip_tags($new_instance['description_color']);
         $instance['border_color'] = strip_tags($new_instance['border_color']);
+        $instance['border_width'] = $new_instance['border_width'];
         return $instance;
     }
 }
