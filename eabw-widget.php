@@ -36,10 +36,13 @@ class EABW_Widget extends WP_Widget {
         $email = get_the_author_meta('user_email');
         $avatar_size = $instance['avatar_size'];
         $avatar_shape = $instance['avatar_shape'];
-        // $avatar_shadow = $instance['avatar_shadow'];
+        $avatar_shadow = $instance['avatar_shadow'];
         $avatar_class = '';
         if ($avatar_shape == 'round') {
             $avatar_class .= ' round';
+        }
+        if ($avatar_shadow) {
+            $avatar_class .= ' shadow-avatar';
         }
         $social_links = get_the_author_meta('eabw_social_links');
         // $social_shadow = $instance['social_shadow'];
@@ -85,27 +88,27 @@ class EABW_Widget extends WP_Widget {
         $avatar_shape_id = $this->get_field_id('avatar_shape');
         $avatar_shape_name = $this->get_field_name('avatar_shape');
 
-        // $avatar_shadow esc_attr(! empty($instance['avatar_shadow']) ? $instance['avatar_shadow'] : false);
-        // $avatar_shadow_id = $this->get_field_id('avatar_shadow');
-        // $avatar_shadow_name = $this->get_field_name('avatar_shadow');
+        $avatar_shadow = esc_attr(! empty($instance['avatar_shadow']) ? $instance['avatar_shadow'] : false);
+        $avatar_shadow_id = $this->get_field_id('avatar_shadow');
+        $avatar_shadow_name = $this->get_field_name('avatar_shadow');
 
-        // $social_shadow esc_attr(! empty($instance['social_shadow']) ? $instance['social_shadow'] : false);
+        // $social_shadow = esc_attr(! empty($instance['social_shadow']) ? $instance['social_shadow'] : false);
         // $social_shadow_id = $this->get_field_id('social_shadow');
         // $social_shadow_name = $this->get_field_name('social_shadow');
 
-        // $border_width esc_attr(! empty($instance['border_width']) ? $instance['border_width'] : '');
+        // $border_width = esc_attr(! empty($instance['border_width']) ? $instance['border_width'] : '');
         // $border_width_id = $this->get_field_id('border_width');
         // $border_width_name = $this->get_field_name('border_width');
 
-        // $border_color esc_attr(! empty($instance['border_color']) ? $instance['border_color'] : '');
+        // $border_color = esc_attr(! empty($instance['border_color']) ? $instance['border_color'] : '');
         // $border_color_id = $this->get_field_id('border_color');
         // $border_color_name = $this->get_field_name('border_color');
 
-        // $border_radius esc_attr(! empty($instance['border_radius']) ? $instance['border_radius'] : '');
+        // $border_radius = esc_attr(! empty($instance['border_radius']) ? $instance['border_radius'] : '');
         // $border_radius_id = $this->get_field_id('border_radius');
         // $border_radius_name = $this->get_field_name('border_radius');
 
-        // $background_color esc_attr(! empty($instance['background_color']) ? $instance['background_color'] : '');
+        // $background_color = esc_attr(! empty($instance['background_color']) ? $instance['background_color'] : '');
         // $background_color_id = $this->get_field_id('background_color');
         // $background_color_name = $this->get_field_name('background_color');
         ?>
@@ -125,6 +128,10 @@ class EABW_Widget extends WP_Widget {
                 <option value="square" <?php if($avatar_shape == 'square') { echo('selected'); } ?>>Square</option>
                 <option value="round" <?php if($avatar_shape == 'round') { echo('selected'); } ?>>Round</option>
             </select>
+        </p>
+        <p>
+            <input type="checkbox" id="<?php echo($avatar_shadow_id); ?>" name="<?php echo($avatar_shadow_name); ?>" value="value" <?php if($avatar_shadow) { echo('checked'); } ?>/>
+            <label for="<?php echo($avatar_shadow_id); ?>">Show shadow on avatar?</label>
         </p>
         
         <script>
@@ -158,6 +165,7 @@ class EABW_Widget extends WP_Widget {
         $instance['title'] = strip_tags($new_instance['title']);
         $instance['avatar_size'] = $new_instance['avatar_size'];
         $instance['avatar_shape'] = strip_tags($new_instance['avatar_shape']);
+        $instance['avatar_shadow'] = isset($new_instance['avatar_shadow']);
         return $instance;
     }
 }
