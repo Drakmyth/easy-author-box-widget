@@ -63,11 +63,13 @@ class EABW_Widget extends WP_Widget {
                     $this->output_author_avatar($instance);
                 ?>
                 <div class="widget-social">
-                    <?php foreach($social_links as $link) { ?>
-                        <a href="<?php echo($link[3]); ?>" class="<?php echo($social_class); ?>" title="<?php echo($link[2]); ?>">
-                        <i class="fab fa-<?php echo($link[0]); ?> color"></i>
-                    </a>
-                    <?php } ?>
+                    <?php foreach($social_links as $link) { 
+                        if (!empty($link[3])) { ?>
+                            <a href="<?php echo($link[3]); ?>" class="<?php echo($social_class); ?>" title="<?php echo($link[2]); ?>">
+                                <i class="fab fa-<?php echo($link[0]); ?> color"></i>
+                            </a>
+                        <?php } 
+                    } ?>
                 </div>
                 <p style="<?php echo($description_style); ?>"><?php echo($description); ?></p>
             </div>
@@ -85,6 +87,9 @@ class EABW_Widget extends WP_Widget {
         $name_style = 'color: '.$instance['name_color'].';';
         
         switch($name_link) {
+            case 'none':
+                break;
+            default:
             case 'posts':
                 $author_url = $posts_url;
                 break;
@@ -128,6 +133,8 @@ class EABW_Widget extends WP_Widget {
         }
         
         switch($avatar_link) {
+            case 'none':
+                break;
             case 'posts':
                 $author_url = $posts_url;
                 break;
@@ -140,6 +147,8 @@ class EABW_Widget extends WP_Widget {
                 if (!empty($website_override)) {
                     $author_url = $website_override;
                 }
+                break;
+            default:
                 break;
         }
         
