@@ -71,8 +71,6 @@ add_action('show_user_profile', 'eabw_social_links_form'); // editing your own p
 add_action('edit_user_profile', 'eabw_social_links_form'); // editing another user
 add_action('user_new_form', 'eabw_social_links_form'); // creating a new user
 
-$testing = false;
-
 function eabw_social_links_save($userId) {
     if (!current_user_can('edit_user', $userId)) {
         return;
@@ -90,3 +88,5 @@ function eabw_social_links_save($userId) {
 add_action('personal_options_update', 'eabw_social_links_save');
 add_action('edit_user_profile_update', 'eabw_social_links_save');
 add_action('user_register', 'eabw_social_links_save');
+
+?>
