@@ -29,6 +29,8 @@ function addRow(tableId, selectId) {
 
     var cell4 = row.insertCell(3);
     populateDeleteCell(cell4, tableId, row);
+
+    jQuery('#' + tableId).tableDnDUpdate();
 }
 
 function deleteRow(element) {

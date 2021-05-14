@@ -10,7 +10,7 @@ function eabw_social_links_form(WP_User $user) {
                 <td>
                     <table class="form-table eabw-social-table" id="eabw-profile-social-links">
                         <tbody>
-                            <tr>
+                            <tr class="nodrag nodrop">
                                 <th class="eabw-social-icon">Icon</th>
                                 <th class="eabw-social-service">Service</th>
                                 <th class="eabw-social-link">Link</th>
@@ -47,6 +47,11 @@ function eabw_social_links_form(WP_User $user) {
                             <?php } ?>
                         </tbody>
                     </table>
+                    <script>
+                        jQuery(document).ready(function() {
+                            jQuery("#eabw-profile-social-links").tableDnD();
+                        });
+                    </script>
                     <select id="eabw-profile-social-options">
                         <option>Facebook</option>
                         <option>GitHub</option>
