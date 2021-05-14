@@ -33,8 +33,8 @@ class EABW_Widget extends WP_Widget {
     public function widget($args, $instance) {
         $title = apply_filters('widget_title', $instance['title']);
         $title = empty($title) ? 'Author' : $title;
-        $display_name = get_the_author_meta('display_name');
         $email = get_the_author_meta('user_email');
+        $avatar_link = $instance['avatar_link'];
         $avatar_size = $instance['avatar_size'];
         $avatar_shape = $instance['avatar_shape'];
         $avatar_shadow = $instance['avatar_shadow'];
@@ -62,9 +62,6 @@ class EABW_Widget extends WP_Widget {
         $body_style .= 'border-width: '.$border_width.'px; ';
         $body_style .= 'border-radius: '.$border_radius.'px;';
 
-        $name_color = $instance['name_color'];
-        $name_style = 'color: '.$name_color.';';
-
         $description_color = $instance['description_color'];
         $description_style = 'color: '.$description_color.';';
 
@@ -72,7 +69,7 @@ class EABW_Widget extends WP_Widget {
         ?>
             <?php echo($args['before_title'].$title.$args['after_title']); ?>
             <div class="widget-body" style="<?php echo($body_style); ?>">
-                <span style="<?php echo($name_style); ?>"><?php echo($display_name); ?></span>
+                <?php $this->output_author_name($instance); ?>
                 <?php echo(get_avatar($email, $avatar_size, '', '', array('class'=>$avatar_class))); ?>
                 <div class="widget-social">
                     <?php foreach($social_links as $link) { ?>
@@ -85,6 +82,40 @@ class EABW_Widget extends WP_Widget {
             </div>
         <?php
         echo $args['after_widget'];
+    }
+
+    private function output_author_name($instance) {
+        $author_id = get_the_author_meta('ID');
+        $display_name = get_the_author_meta('display_name');
+        $name_link = $instance['name_link'];
+        $website = get_the_author_meta('user_url');
+        $website_override = get_the_author_meta('eabw_website_override');
+        $posts_url = get_author_posts_url($author_id);
+        $name_style = 'color: '.$instance['name_color'].';';
+        
+        switch($name_link) {
+            case 'posts':
+                $author_url = $posts_url;
+                break;
+            case 'website':
+                if (!empty($website)) {
+                    $author_url = $website;
+                }
+                break;
+            case 'override':
+                if (!empty($website_override)) {
+                    $author_url = $website_override;
+                }
+                break;
+        }
+        
+        if (isset($author_url)) { ?>
+            <a href="<?php echo($author_url); ?>">
+                <span style="<?php echo($name_style); ?>"><?php echo($display_name); ?></span>
+            </a>
+        <?php } else { ?>
+            <span style="<?php echo($name_style); ?>"><?php echo($display_name); ?></span>
+        <?php }
     }
 
     /**
