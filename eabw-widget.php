@@ -45,8 +45,11 @@ class EABW_Widget extends WP_Widget {
             $avatar_class .= ' shadow-avatar';
         }
         $social_links = get_the_author_meta('eabw_social_links');
-        // $social_shadow = $instance['social_shadow'];
-        $social_class = 'widget-social-link shadow-social';
+        $social_shadow = $instance['social_shadow'];
+        $social_class = 'widget-social-link';
+        if ($social_shadow) {
+            $social_class .= ' shadow-social';
+        }
         $description = get_the_author_meta('description');
 
         echo $args['before_widget'];
@@ -92,9 +95,9 @@ class EABW_Widget extends WP_Widget {
         $avatar_shadow_id = $this->get_field_id('avatar_shadow');
         $avatar_shadow_name = $this->get_field_name('avatar_shadow');
 
-        // $social_shadow = esc_attr(! empty($instance['social_shadow']) ? $instance['social_shadow'] : false);
-        // $social_shadow_id = $this->get_field_id('social_shadow');
-        // $social_shadow_name = $this->get_field_name('social_shadow');
+        $social_shadow = esc_attr(! empty($instance['social_shadow']) ? $instance['social_shadow'] : false);
+        $social_shadow_id = $this->get_field_id('social_shadow');
+        $social_shadow_name = $this->get_field_name('social_shadow');
 
         // $border_width = esc_attr(! empty($instance['border_width']) ? $instance['border_width'] : '');
         // $border_width_id = $this->get_field_id('border_width');
@@ -133,6 +136,10 @@ class EABW_Widget extends WP_Widget {
             <input type="checkbox" id="<?php echo($avatar_shadow_id); ?>" name="<?php echo($avatar_shadow_name); ?>" value="value" <?php if($avatar_shadow) { echo('checked'); } ?>/>
             <label for="<?php echo($avatar_shadow_id); ?>">Show shadow on avatar?</label>
         </p>
+        <p>
+            <input type="checkbox" id="<?php echo($social_shadow_id); ?>" name="<?php echo($social_shadow_name); ?>" value="value" <?php if($social_shadow) { echo('checked'); } ?>/>
+            <label for="<?php echo($social_shadow_id); ?>">Show shadow on social icons?</label>
+        </p>
         
         <script>
             var sliderIds = ['<?php echo($avatar_size_id); ?>'];
@@ -166,6 +173,7 @@ class EABW_Widget extends WP_Widget {
         $instance['avatar_size'] = $new_instance['avatar_size'];
         $instance['avatar_shape'] = strip_tags($new_instance['avatar_shape']);
         $instance['avatar_shadow'] = isset($new_instance['avatar_shadow']);
+        $instance['social_shadow'] = isset($new_instance['social_shadow']);
         return $instance;
     }
 }
