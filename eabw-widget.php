@@ -52,10 +52,13 @@ class EABW_Widget extends WP_Widget {
         }
         $description = get_the_author_meta('description');
 
+        $background_color = $instance['background_color'];
+        $body_style = 'background: '.$background_color.'; ';
+
         echo $args['before_widget'];
         ?>
             <?php echo($args['before_title'].$title.$args['after_title']); ?>
-            <div class="widget-body">
+            <div class="widget-body" style="<?php echo($body_style); ?>">
                 <span><?php echo($display_name); ?></span>
                 <?php echo(get_avatar($email, $avatar_size, '', '', array('class'=>$avatar_class))); ?>
                 <div class="widget-social">
@@ -99,6 +102,10 @@ class EABW_Widget extends WP_Widget {
         $social_shadow_id = $this->get_field_id('social_shadow');
         $social_shadow_name = $this->get_field_name('social_shadow');
 
+        $background_color = esc_attr(! empty($instance['background_color']) ? $instance['background_color'] : '#ffffff');
+        $background_color_id = $this->get_field_id('background_color');
+        $background_color_name = $this->get_field_name('background_color');
+
         // $border_width = esc_attr(! empty($instance['border_width']) ? $instance['border_width'] : '');
         // $border_width_id = $this->get_field_id('border_width');
         // $border_width_name = $this->get_field_name('border_width');
@@ -110,10 +117,6 @@ class EABW_Widget extends WP_Widget {
         // $border_radius = esc_attr(! empty($instance['border_radius']) ? $instance['border_radius'] : '');
         // $border_radius_id = $this->get_field_id('border_radius');
         // $border_radius_name = $this->get_field_name('border_radius');
-
-        // $background_color = esc_attr(! empty($instance['background_color']) ? $instance['background_color'] : '');
-        // $background_color_id = $this->get_field_id('background_color');
-        // $background_color_name = $this->get_field_name('background_color');
         ?>
 
         <p>
@@ -139,6 +142,10 @@ class EABW_Widget extends WP_Widget {
         <p>
             <input type="checkbox" id="<?php echo($social_shadow_id); ?>" name="<?php echo($social_shadow_name); ?>" value="value" <?php if($social_shadow) { echo('checked'); } ?>/>
             <label for="<?php echo($social_shadow_id); ?>">Show shadow on social icons?</label>
+        </p>
+        <p>
+            <label for="<?php echo($background_color_id); ?>">Background Color:</label>
+            <input type="color" id="<?php echo($background_color_id); ?>" name="<?php echo($background_color_name); ?>" value="<?php echo($background_color); ?>" />
         </p>
         
         <script>
@@ -174,6 +181,7 @@ class EABW_Widget extends WP_Widget {
         $instance['avatar_shape'] = strip_tags($new_instance['avatar_shape']);
         $instance['avatar_shadow'] = isset($new_instance['avatar_shadow']);
         $instance['social_shadow'] = isset($new_instance['social_shadow']);
+        $instance['background_color'] = strip_tags($new_instance['background_color']);
         return $instance;
     }
 }
