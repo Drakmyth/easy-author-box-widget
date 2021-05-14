@@ -33,18 +33,7 @@ class EABW_Widget extends WP_Widget {
     public function widget($args, $instance) {
         $title = apply_filters('widget_title', $instance['title']);
         $title = empty($title) ? 'Author' : $title;
-        $email = get_the_author_meta('user_email');
-        $avatar_link = $instance['avatar_link'];
-        $avatar_size = $instance['avatar_size'];
-        $avatar_shape = $instance['avatar_shape'];
-        $avatar_shadow = $instance['avatar_shadow'];
-        $avatar_class = '';
-        if ($avatar_shape == 'round') {
-            $avatar_class .= ' round';
-        }
-        if ($avatar_shadow) {
-            $avatar_class .= ' shadow-avatar';
-        }
+        
         $social_links = get_the_author_meta('eabw_social_links');
         $social_shadow = $instance['social_shadow'];
         $social_class = 'widget-social-link';
@@ -69,8 +58,10 @@ class EABW_Widget extends WP_Widget {
         ?>
             <?php echo($args['before_title'].$title.$args['after_title']); ?>
             <div class="widget-body" style="<?php echo($body_style); ?>">
-                <?php $this->output_author_name($instance); ?>
-                <?php echo(get_avatar($email, $avatar_size, '', '', array('class'=>$avatar_class))); ?>
+                <?php
+                    $this->output_author_name($instance);
+                    $this->output_author_avatar($instance);
+                ?>
                 <div class="widget-social">
                     <?php foreach($social_links as $link) { ?>
                         <a href="<?php echo($link[3]); ?>" class="<?php echo($social_class); ?>" title="<?php echo($link[2]); ?>">
@@ -116,6 +107,49 @@ class EABW_Widget extends WP_Widget {
         <?php } else { ?>
             <span style="<?php echo($name_style); ?>"><?php echo($display_name); ?></span>
         <?php }
+    }
+
+    private function output_author_avatar($instance) {
+        $author_id = get_the_author_meta('ID');
+        $website = get_the_author_meta('user_url');
+        $website_override = get_the_author_meta('eabw_website_override');
+        $posts_url = get_author_posts_url($author_id);
+        $email = get_the_author_meta('user_email');
+        $avatar_link = $instance['avatar_link'];
+        $avatar_size = $instance['avatar_size'];
+        $avatar_shape = $instance['avatar_shape'];
+        $avatar_shadow = $instance['avatar_shadow'];
+        $avatar_class = '';
+        if ($avatar_shape == 'round') {
+            $avatar_class .= ' round';
+        }
+        if ($avatar_shadow) {
+            $avatar_class .= ' shadow-avatar';
+        }
+        
+        switch($avatar_link) {
+            case 'posts':
+                $author_url = $posts_url;
+                break;
+            case 'website':
+                if (!empty($website)) {
+                    $author_url = $website;
+                }
+                break;
+            case 'override':
+                if (!empty($website_override)) {
+                    $author_url = $website_override;
+                }
+                break;
+        }
+        
+        if (isset($author_url)) { ?>
+            <a href="<?php echo($author_url); ?>">
+                <?php echo(get_avatar($email, $avatar_size, '', '', array('class'=>$avatar_class))); ?>
+            </a>
+        <?php } else {
+            echo(get_avatar($email, $avatar_size, '', '', array('class'=>$avatar_class)));
+        }
     }
 
     /**
