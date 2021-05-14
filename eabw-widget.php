@@ -35,9 +35,12 @@ class EABW_Widget extends WP_Widget {
         $display_name = get_the_author_meta('display_name');
         $email = get_the_author_meta('user_email');
         $avatar_size = $instance['avatar_size'];
-        // $avatar_shape = $instance['avatar_shape'];
+        $avatar_shape = $instance['avatar_shape'];
         // $avatar_shadow = $instance['avatar_shadow'];
-        $avatar_class = 'shadow-avatar round';
+        $avatar_class = '';
+        if ($avatar_shape == 'round') {
+            $avatar_class .= ' round';
+        }
         $social_links = get_the_author_meta('eabw_social_links');
         // $social_shadow = $instance['social_shadow'];
         $social_class = 'widget-social-link shadow-social';
@@ -78,9 +81,9 @@ class EABW_Widget extends WP_Widget {
         $avatar_size_id = $this->get_field_id('avatar_size');
         $avatar_size_name = $this->get_field_name('avatar_size');
 
-        // $avatar_shape esc_attr(! empty($instance['avatar_shape']) ? $instance['avatar_shape'] : 'square');
-        // $avatar_shape_id = $this->get_field_id('avatar_shape');
-        // $avatar_shape_name = $this->get_field_name('avatar_shape');
+        $avatar_shape = esc_attr(! empty($instance['avatar_shape']) ? $instance['avatar_shape'] : 'square');
+        $avatar_shape_id = $this->get_field_id('avatar_shape');
+        $avatar_shape_name = $this->get_field_name('avatar_shape');
 
         // $avatar_shadow esc_attr(! empty($instance['avatar_shadow']) ? $instance['avatar_shadow'] : false);
         // $avatar_shadow_id = $this->get_field_id('avatar_shadow');
@@ -116,6 +119,13 @@ class EABW_Widget extends WP_Widget {
             <input type="range" min="100" max="200" class="slider widefat" id="<?php echo($avatar_size_id); ?>" name="<?php echo($avatar_size_name); ?>" value="<?php echo($avatar_size); ?>" />
             <span id="<?php echo($avatar_size_id.'_display'); ?>"></span>
         </p>
+        <p>
+            <label for="<?php echo($avatar_shape_id); ?>">Avatar Shape:</label>
+            <select id="<?php echo($avatar_shape_id); ?>" name="<?php echo($avatar_shape_name); ?>">
+                <option value="square" <?php if($avatar_shape == 'square') { echo('selected'); } ?>>Square</option>
+                <option value="round" <?php if($avatar_shape == 'round') { echo('selected'); } ?>>Round</option>
+            </select>
+        </p>
         
         <script>
             var sliderIds = ['<?php echo($avatar_size_id); ?>'];
@@ -147,6 +157,7 @@ class EABW_Widget extends WP_Widget {
         $instance = $old_instance;
         $instance['title'] = strip_tags($new_instance['title']);
         $instance['avatar_size'] = $new_instance['avatar_size'];
+        $instance['avatar_shape'] = strip_tags($new_instance['avatar_shape']);
         return $instance;
     }
 }
