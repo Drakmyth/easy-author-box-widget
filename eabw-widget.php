@@ -58,6 +58,9 @@ class EABW_Widget extends WP_Widget {
         $name_color = $instance['name_color'];
         $name_style = 'color: '.$name_color.';';
 
+        $description_color = $instance['description_color'];
+        $description_style = 'color: '.$description_color.';';
+
         echo $args['before_widget'];
         ?>
             <?php echo($args['before_title'].$title.$args['after_title']); ?>
@@ -71,7 +74,7 @@ class EABW_Widget extends WP_Widget {
                     </a>
                     <?php } ?>
                 </div>
-                <p><?php echo($description); ?></p>
+                <p style="<?php echo($description_style); ?>"><?php echo($description); ?></p>
             </div>
         <?php
         echo $args['after_widget'];
@@ -112,6 +115,10 @@ class EABW_Widget extends WP_Widget {
         $name_color = esc_attr(! empty($instance['name_color']) ? $instance['name_color'] : '#000000');
         $name_color_id = $this->get_field_id('name_color');
         $name_color_name = $this->get_field_name('name_color');
+
+        $description_color = esc_attr(! empty($instance['description_color']) ? $instance['description_color'] : '#000000');
+        $description_color_id = $this->get_field_id('description_color');
+        $description_color_name = $this->get_field_name('description_color');
 
         // $border_width = esc_attr(! empty($instance['border_width']) ? $instance['border_width'] : '');
         // $border_width_id = $this->get_field_id('border_width');
@@ -158,6 +165,10 @@ class EABW_Widget extends WP_Widget {
             <label for="<?php echo($name_color_id); ?>">Name Color:</label>
             <input type="color" id="<?php echo($name_color_id); ?>" name="<?php echo($name_color_name); ?>" value="<?php echo($name_color); ?>" />
         </p>
+        <p>
+            <label for="<?php echo($description_color_id); ?>">Description Color:</label>
+            <input type="color" id="<?php echo($description_color_id); ?>" name="<?php echo($description_color_name); ?>" value="<?php echo($description_color); ?>" />
+        </p>
         
         <script>
             var sliderIds = ['<?php echo($avatar_size_id); ?>'];
@@ -194,6 +205,7 @@ class EABW_Widget extends WP_Widget {
         $instance['social_shadow'] = isset($new_instance['social_shadow']);
         $instance['background_color'] = strip_tags($new_instance['background_color']);
         $instance['name_color'] = strip_tags($new_instance['name_color']);
+        $instance['description_color'] = strip_tags($new_instance['description_color']);
         return $instance;
     }
 }
