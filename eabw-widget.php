@@ -53,7 +53,9 @@ class EABW_Widget extends WP_Widget {
         $description = get_the_author_meta('description');
 
         $background_color = $instance['background_color'];
+        $border_color = $instance['border_color'];
         $body_style = 'background: '.$background_color.'; ';
+        $body_style .= 'border-color: '.$border_color.';';
 
         $name_color = $instance['name_color'];
         $name_style = 'color: '.$name_color.';';
@@ -119,14 +121,14 @@ class EABW_Widget extends WP_Widget {
         $description_color = esc_attr(! empty($instance['description_color']) ? $instance['description_color'] : '#000000');
         $description_color_id = $this->get_field_id('description_color');
         $description_color_name = $this->get_field_name('description_color');
+        
+        $border_color = esc_attr(! empty($instance['border_color']) ? $instance['border_color'] : '#000000');
+        $border_color_id = $this->get_field_id('border_color');
+        $border_color_name = $this->get_field_name('border_color');
 
         // $border_width = esc_attr(! empty($instance['border_width']) ? $instance['border_width'] : '');
         // $border_width_id = $this->get_field_id('border_width');
         // $border_width_name = $this->get_field_name('border_width');
-
-        // $border_color = esc_attr(! empty($instance['border_color']) ? $instance['border_color'] : '');
-        // $border_color_id = $this->get_field_id('border_color');
-        // $border_color_name = $this->get_field_name('border_color');
 
         // $border_radius = esc_attr(! empty($instance['border_radius']) ? $instance['border_radius'] : '');
         // $border_radius_id = $this->get_field_id('border_radius');
@@ -169,6 +171,10 @@ class EABW_Widget extends WP_Widget {
             <label for="<?php echo($description_color_id); ?>">Description Color:</label>
             <input type="color" id="<?php echo($description_color_id); ?>" name="<?php echo($description_color_name); ?>" value="<?php echo($description_color); ?>" />
         </p>
+        <p>
+            <label for="<?php echo($border_color_id); ?>">Border Color:</label>
+            <input type="color" id="<?php echo($border_color_id); ?>" name="<?php echo($border_color_name); ?>" value="<?php echo($border_color); ?>" />
+        </p>
         
         <script>
             var sliderIds = ['<?php echo($avatar_size_id); ?>'];
@@ -206,6 +212,7 @@ class EABW_Widget extends WP_Widget {
         $instance['background_color'] = strip_tags($new_instance['background_color']);
         $instance['name_color'] = strip_tags($new_instance['name_color']);
         $instance['description_color'] = strip_tags($new_instance['description_color']);
+        $instance['border_color'] = strip_tags($new_instance['border_color']);
         return $instance;
     }
 }
