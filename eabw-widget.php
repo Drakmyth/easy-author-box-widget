@@ -35,11 +35,13 @@ class EABW_Widget extends WP_Widget {
         $title = empty($title) ? 'Author' : $title;
         
         $social_links = get_the_author_meta('eabw_social_links');
+        $social_size = $instance['social_size'];
         $social_shadow = $instance['social_shadow'];
         $social_class = 'widget-social-link';
         if ($social_shadow) {
             $social_class .= ' shadow-social';
         }
+        $social_style = 'font-size: '.$social_size.'px;';
         $description = get_the_author_meta('description');
 
         $background_color = $instance['background_color'];
@@ -66,7 +68,7 @@ class EABW_Widget extends WP_Widget {
                     <?php foreach($social_links as $link) { 
                         if (!empty($link[3])) { ?>
                             <a href="<?php echo($link[3]); ?>" class="<?php echo($social_class); ?>" title="<?php echo($link[2]); ?>">
-                                <i class="fab fa-<?php echo($link[0]); ?> color"></i>
+                                <i class="fab fa-<?php echo($link[0]); ?> color" style="<?php echo($social_style); ?>"></i>
                             </a>
                         <?php } 
                     } ?>
@@ -193,6 +195,10 @@ class EABW_Widget extends WP_Widget {
         $avatar_shadow_id = $this->get_field_id('avatar_shadow');
         $avatar_shadow_name = $this->get_field_name('avatar_shadow');
 
+        $social_size = esc_attr(is_numeric($instance['social_size']) ? $instance['social_size'] : 40);
+        $social_size_id = $this->get_field_id('social_size');
+        $social_size_name = $this->get_field_name('social_size');
+
         $social_shadow = esc_attr(! empty($instance['social_shadow']) ? $instance['social_shadow'] : false);
         $social_shadow_id = $this->get_field_id('social_shadow');
         $social_shadow_name = $this->get_field_name('social_shadow');
@@ -261,6 +267,11 @@ class EABW_Widget extends WP_Widget {
             <label for="<?php echo($avatar_shadow_id); ?>">Show shadow on avatar?</label>
         </p>
         <p>
+            <label for="<?php echo($social_size_id); ?>">Social Icon Size:</label>
+            <input type="range" min="20" max="100" class="slider widefat" id="<?php echo($social_size_id); ?>" name="<?php echo($social_size_name); ?>" value="<?php echo($social_size); ?>" />
+            <span id="<?php echo($social_size_id.'_display'); ?>"></span>
+        </p>
+        <p>
             <input type="checkbox" id="<?php echo($social_shadow_id); ?>" name="<?php echo($social_shadow_name); ?>" value="value" <?php if($social_shadow) { echo('checked'); } ?>/>
             <label for="<?php echo($social_shadow_id); ?>">Show shadow on social icons?</label>
         </p>
@@ -292,7 +303,7 @@ class EABW_Widget extends WP_Widget {
         </p>
 
         <?php
-            $sliderIds = implode("', '", array($avatar_size_id, $border_width_id, $border_radius_id));
+            $sliderIds = implode("', '", array($avatar_size_id, $social_size_id, $border_width_id, $border_radius_id));
         ?>
         
         <script>
@@ -329,6 +340,7 @@ class EABW_Widget extends WP_Widget {
         $instance['avatar_size'] = is_numeric($new_instance['avatar_size']) ? $new_instance['avatar_size'] : 150;
         $instance['avatar_shape'] = sanitize_key($new_instance['avatar_shape']);
         $instance['avatar_shadow'] = isset($new_instance['avatar_shadow']);
+        $instance['social_size'] = is_numeric($new_instance['social_size']) ? $new_instance['social_size'] : 40;
         $instance['social_shadow'] = isset($new_instance['social_shadow']);
         $instance['background_color'] = sanitize_hex_color($new_instance['background_color']);
         $instance['name_color'] = sanitize_hex_color($new_instance['name_color']);
