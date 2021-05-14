@@ -83,15 +83,15 @@ function eabw_social_links_save($userId) {
         return;
     }
 
-    $icons = $_POST['eabw-txtIcon'];
-    $customs = $_POST['eabw-txtCustom'];
-    $services = $_POST['eabw-txtService'];
-    $links = $_POST['eabw-txtLink'];
+    $icons = array_map('sanitize_text_field', $_POST['eabw-txtIcon']);
+    $customs = array_map('sanitize_text_field', $_POST['eabw-txtCustom']);
+    $services = array_map('sanitize_text_field', $_POST['eabw-txtService']);
+    $links = array_map('esc_url_raw', $_POST['eabw-txtLink']);
 
     $data = array_map(null, $icons, $customs, $services, $links);
     update_user_meta($userId, 'eabw_social_links', $data);
 
-    $web_override = $_POST['eabw-website-override'];
+    $web_override = esc_url_raw($_POST['eabw-website-override']);
     update_user_meta($userId, 'eabw_website_override', $web_override);
 }
 add_action('personal_options_update', 'eabw_social_links_save');

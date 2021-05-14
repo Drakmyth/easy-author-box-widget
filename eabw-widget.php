@@ -223,17 +223,17 @@ class EABW_Widget extends WP_Widget {
      */
     public function update($new_instance, $old_instance) {
         $instance = $old_instance;
-        $instance['title'] = strip_tags($new_instance['title']);
-        $instance['avatar_size'] = $new_instance['avatar_size'];
-        $instance['avatar_shape'] = strip_tags($new_instance['avatar_shape']);
+        $instance['title'] = sanitize_text_field($new_instance['title']);
+        $instance['avatar_size'] = is_numeric($new_instance['avatar_size']) ? $new_instance['avatar_size'] : 150;
+        $instance['avatar_shape'] = sanitize_key($new_instance['avatar_shape']);
         $instance['avatar_shadow'] = isset($new_instance['avatar_shadow']);
         $instance['social_shadow'] = isset($new_instance['social_shadow']);
-        $instance['background_color'] = strip_tags($new_instance['background_color']);
-        $instance['name_color'] = strip_tags($new_instance['name_color']);
-        $instance['description_color'] = strip_tags($new_instance['description_color']);
-        $instance['border_color'] = strip_tags($new_instance['border_color']);
-        $instance['border_width'] = $new_instance['border_width'];
-        $instance['border_radius'] = $new_instance['border_radius'];
+        $instance['background_color'] = sanitize_hex_color($new_instance['background_color']);
+        $instance['name_color'] = sanitize_hex_color($new_instance['name_color']);
+        $instance['description_color'] = sanitize_hex_color($new_instance['description_color']);
+        $instance['border_color'] = sanitize_hex_color($new_instance['border_color']);
+        $instance['border_width'] = is_numeric($new_instance['border_width']) ? $new_instance['border_width'] : 3;
+        $instance['border_radius'] = is_numeric($new_instance['border_radius']) ? $new_instance['border_radius'] : 0;
         return $instance;
     }
 }
